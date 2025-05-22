@@ -149,7 +149,7 @@ class GameEngine {
       //Strike
       if (frame.isStrike) {
         const bonus = this.getNextRolls(i, 2);
-        if (bonus.length < 1) continue;
+        if (bonus.length < 2) continue;
         frame.score = 10 + (bonus[0] ?? 0) + (bonus[1] ?? 0)
       }
       //Spare
