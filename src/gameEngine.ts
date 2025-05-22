@@ -17,6 +17,11 @@ class GameEngine {
   public getState(): GameState {
     return this.state;
   }
+  public getTotal(): number {
+    return this.state.frames.reduce((sum, frame) => {
+      return sum + (frame.score ?? 0);
+    },0)
+  }
 
   public roll(pins: number): GameState {
     if (this.state.isComplete) throw new Error("Game is already finished.");
