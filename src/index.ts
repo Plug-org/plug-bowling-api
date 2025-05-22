@@ -32,8 +32,8 @@ myGame.roll(5)
 
 //10
 myGame.roll(10)
-myGame.roll(10)
-myGame.roll(10)
+myGame.roll(3)
+//myGame.roll(10)
 
 
 

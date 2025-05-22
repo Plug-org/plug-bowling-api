@@ -39,34 +39,9 @@ class GameEngine {
         throw new Error('Total pins in a frame cannot exceed 10.')
       }
     }
-
     //Guard against illegal totals in the final frame (i.e. in the first two rolls)
     if (isFinalFrame) {
-      const rolls = currentFrame.rolls;
-
-      if (rolls.length === 1) {
-        const first = rolls[0];
-
-        // If first wasn't a strike, ensure total doesn't exceed 10
-        if (first !== 10 && first + pins > 10) {
-          throw new Error('In the final frame, the total of the first two rolls cannot exceed 10 unless the first roll is a strike.');
-        }
-      }
-
-      if (rolls.length === 2) {
-        const [first, second] = rolls;
-        const isStrike = first === 10;
-        const isSpare = first + second === 10;
-
-        // If not strike or spare, no third roll allowed
-        if (!isStrike && !isSpare) {
-          throw new Error('No third roll allowed in the final frame unless the player scored a strike or spare.');
-        }
-      }
-
-      if (rolls.length >= 3) {
-        throw new Error('No more than 3 rolls allowed in the final frame.');
-      }
+      this.validateFinalFrameRoll(currentFrame, pins)
     }
 
     currentFrame.rolls.push(pins);
@@ -98,6 +73,12 @@ class GameEngine {
     }
   }
 
+/**
+   * handleFinalFrame()
+   * checks if player should get a third roll in the final frame
+   * (e.g they get a strike or spare on the first or second roll
+   * then they should get a third roll)
+*/
   private handleFinalFrame(frame: Frame): void {
     const [first, second] = frame.rolls;
 
@@ -105,6 +86,40 @@ class GameEngine {
       this.state.isComplete = true;      
     }else if  (frame.rolls.length === 3) {
       this.state.isComplete = true;
+    }
+  }
+
+/**
+   * validateFinalFrameRoll()
+   * This guards agains getting 11+ points on a given roll in the final frame.
+   * 
+*/
+  private validateFinalFrameRoll(frame: Frame, pins: number): void {
+    const rolls = frame.rolls;
+
+    if (rolls.length === 1) {
+      const first = rolls[0];
+      if (first !== 10 && first + pins > 10) {
+        throw new Error(
+          'In the final frame, the total of the first two rolls cannot exceed 10 unless the first roll is a strike.'
+        );
+      }
+    }
+
+    if (rolls.length === 2) {
+      const [first, second] = rolls;
+      const isStrike = first === 10;
+      const isSpare = first + second === 10;
+
+      if (!isStrike && !isSpare) {
+        throw new Error(
+          'No third roll allowed in the final frame unless the player scored a strike or spare.'
+        );
+      }
+    }
+
+    if (rolls.length >= 3) {
+      throw new Error('No more than 3 rolls allowed in the final frame.');
     }
   }
 
@@ -145,6 +160,13 @@ class GameEngine {
     } 
   }
 
+/** 
+ * getNextRolls()
+ * Collects the next `count` rolls starting from the frame after `startIndex`.
+ * Used for calculating bonus points for strikes and spares.
+ * 
+ * For example, after a strike, you need the next two rolls from subsequent frames.
+*/
   private getNextRolls(startIndex: number, count:number): number[] {
     const rolls: number[] = [];
     for(let i = startIndex +1; i < this.state.frames.length && rolls.length < count; i++) {
