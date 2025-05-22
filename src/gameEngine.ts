@@ -31,6 +31,43 @@ class GameEngine {
     }
 
     const currentFrame = frames[currentFrameIndex];
+    
+    //Guard against illegal totals i.e. 11+ in a single frame (except the final frame)
+    if(!isFinalFrame && currentFrame.rolls.length === 1){
+      const firstRoll = currentFrame.rolls[0];
+      if(firstRoll + pins > 10){
+        throw new Error('Total pins in a frame cannot exceed 10.')
+      }
+    }
+
+    //Guard against illegal totals in the final frame (i.e. in the first two rolls)
+    if (isFinalFrame) {
+      const rolls = currentFrame.rolls;
+
+      if (rolls.length === 1) {
+        const first = rolls[0];
+
+        // If first wasn't a strike, ensure total doesn't exceed 10
+        if (first !== 10 && first + pins > 10) {
+          throw new Error('In the final frame, the total of the first two rolls cannot exceed 10 unless the first roll is a strike.');
+        }
+      }
+
+      if (rolls.length === 2) {
+        const [first, second] = rolls;
+        const isStrike = first === 10;
+        const isSpare = first + second === 10;
+
+        // If not strike or spare, no third roll allowed
+        if (!isStrike && !isSpare) {
+          throw new Error('No third roll allowed in the final frame unless the player scored a strike or spare.');
+        }
+      }
+
+      if (rolls.length >= 3) {
+        throw new Error('No more than 3 rolls allowed in the final frame.');
+      }
+    }
 
     currentFrame.rolls.push(pins);
 
@@ -78,6 +115,14 @@ class GameEngine {
       const frame = frames[i];
       if (frame.score !== undefined) continue;
 
+      //Final frame (can have 3 rolls so check this first)
+      if(i === 9 ){
+        if (this.state.isComplete) {
+          frame.score = frame.rolls.reduce((sum, pins) => sum + pins, 0);
+        }
+        continue;
+      }
+
       //Normal frame
       const [first, second] = frame.rolls;
 
@@ -96,10 +141,6 @@ class GameEngine {
       //Open frame
       else if (frame.rolls.length === 2) {
         frame.score = first + second;
-      }
-      //Final frame (can have 3 rolls)
-      if (i === 9 && frame.rolls.length >= 2) {
-        frame.score = frame.rolls. reduce((sum, pins) => sum + pins, 0);
       }
     } 
   }
