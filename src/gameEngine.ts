@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+const { v4: uuidv4 } = require('uuid');
 import type { Frame, GameState } from './types';
 
 class GameEngine {
@@ -182,3 +182,31 @@ class GameEngine {
 };
 
 export default GameEngine;
+
+
+//trial
+function runGame(){
+  const myGame = new GameEngine("_id1");
+  
+  //perfect score game
+  myGame.roll(10);
+  myGame.roll(10);
+  myGame.roll(10);
+  myGame.roll(10);
+  myGame.roll(10);
+  myGame.roll(10);
+  myGame.roll(10);
+  myGame.roll(10);
+  myGame.roll(10);
+  myGame.roll(10);
+  myGame.roll(10);
+  myGame.roll(10)
+  
+  
+  //console.log(myGame.getState())
+  console.log(myGame.getState().frames)
+  console.log("game finished ?: ", myGame.getState().isComplete)
+  console.log("TOTAL: ",myGame.getTotal())
+};
+
+//runGame()
