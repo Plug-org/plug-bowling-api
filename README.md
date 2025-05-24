@@ -1,5 +1,60 @@
 # Plug Bowling API
 A beginner-friendly API which will let you go beyond simple CRUD operations. This API handles the game logic of a bowling match and works by updating and saving game state which is sent back in responses to the client. Requests from the client are pretty simple (usually just providing an `id`representing a user or game, or `number` representing pins ). The backend handles the logic of game play and game state updates. So the challenge for the frontend is what to do with that game state in the context of your particular version of a bowling game. The game logic might seem like the real challenge but there is still a lot to do on the client and many interpreations of how a particular client can be designed and implemented.
+## Installation
+1. clone repo inside your project directory
+```bash
+
+git clone https://github.com/Plug-org/plug-bowling-api.git
+cd plug-bowling-api
+```
+2.  install dependencies
+```bash
+npm run install
+```
+3.  run server
+```bash
+npm run dev
+```
+4.  seed db
+```bash
+npm run seed
+```
+The server will start at http://localhost:5000
+
+# Endpoints
+
+## Users
+### Get all users
+```js
+GET /users
+```
+### Get a user by id
+```js
+GET /users/:id
+```
+### Create a user
+```js
+PUT /users
+
+//req body
+{
+  "name": "user name"
+}
+```
+### Edit a user
+```js
+PUT /users/:id
+
+//req body
+{
+  "name": "updated name"
+}
+```
+* ### Delete a user
+```js
+DELETE /users/:id
+```
+
 
 ## Some ideas:
 Game types:
