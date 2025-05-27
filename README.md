@@ -20,18 +20,49 @@ npm run dev
 npm run seed
 ```
 The server will start at http://localhost:5000
+### Useful scripts
+reset the db if you ever want to "start over". 
+This will delete your data and reset it to its starting state.
+```bash
+npm run reset
+```
 
-# Endpoints
+## **Endpoints**
 
-## Users
+## *Users*
 ### Get all users
 ```js
 GET /users
 ```
+successful response
+```js
+[
+    {
+        "id": 15,
+        "name": "Donnie",
+        "created_at": "2025-05-27 16:26:37"
+    },
+    {
+        "id": 16,
+        "name": "The Big Lebowski",
+        "created_at": "2025-05-27 16:26:37"
+    }
+]
+```
+
 ### Get a user by id
 ```js
 GET /users/:id
 ```
+successful response
+```js
+{
+    "id": 15,
+    "name": "Donnie",
+    "created_at": "2025-05-27 16:26:37"
+}
+```
+
 ### Create a user
 ```js
 PUT /users
@@ -41,6 +72,15 @@ PUT /users
   "name": "user name"
 }
 ```
+successful response
+```js
+{
+    "id": 17,
+    "name": "New User",
+    "created_at": "2025-05-27 16:30:32"
+}
+```
+
 ### Edit a user
 ```js
 PUT /users/:id
@@ -50,9 +90,24 @@ PUT /users/:id
   "name": "updated name"
 }
 ```
-* ### Delete a user
+successful response
+```js
+{
+    "id": 15,
+    "name": "New Name.",
+    "created_at": "2025-05-27 16:26:37"
+}
+```
+
+### Delete a user
 ```js
 DELETE /users/:id
+```
+successful response
+```js
+{
+    "success": true
+}
 ```
 
 
