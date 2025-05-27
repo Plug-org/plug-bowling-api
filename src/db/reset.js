@@ -5,8 +5,10 @@ const path = require('path');
 const DB_FILE = path.resolve(__dirname, '../../database.db');
 const db = new Database(DB_FILE);
 
-async function seedDb () {
+async function resetDb () {
   try{
+    //TODO add delete games table
+    db.prepare('DELETE FROM users').run();
     const filePath = path.join(__dirname, "/seed_users.json")
     const seedData = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
     const insert = db.prepare('INSERT INTO users (name ) VALUES (?)');
@@ -15,9 +17,9 @@ async function seedDb () {
     });
     insertMany(seedData);
     console.log({ success: "Succesfully seeded database." });
-  }catch(err){
-    console.error({ error:"Failed to seed data", message:err })
+  }catch{
+    console.error({ error:"Failed to reset data." })
   }
 };
 
-seedDb();
+resetDb();
