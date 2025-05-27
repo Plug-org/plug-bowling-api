@@ -10,7 +10,8 @@
     "start": "node dist/index.js",
     "typecheck": "tsc --noEmit",
     "seed": "node src/db/seed.js",
-    "reset": "node src/db/reset.js"
+    "reset": "node src/db/reset.js",
+    "game": "npx ts-node src/gameEngine.ts"
   },
   "keywords": [],
   "author": "",

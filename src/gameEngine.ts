@@ -184,29 +184,14 @@ class GameEngine {
 export default GameEngine;
 
 
-//trial
+
 function runGame(){
   const myGame = new GameEngine("_id1");
   
-  //perfect score game
-  myGame.roll(10);
-  myGame.roll(10);
-  myGame.roll(10);
-  myGame.roll(10);
-  myGame.roll(10);
-  myGame.roll(10);
-  myGame.roll(10);
-  myGame.roll(10);
-  myGame.roll(10);
-  myGame.roll(10);
-  myGame.roll(10);
-  myGame.roll(10)
+  myGame.roll(5);
   
-  
-  //console.log(myGame.getState())
+  console.log(myGame.getState())
   console.log(myGame.getState().frames)
-  console.log("game finished ?: ", myGame.getState().isComplete)
-  console.log("TOTAL: ",myGame.getTotal())
 };
 
-//runGame()
+runGame()

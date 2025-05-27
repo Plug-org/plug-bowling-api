@@ -21,11 +21,30 @@ npm run seed
 ```
 The server will start at http://localhost:5000
 ### Useful scripts
-reset the db if you ever want to "start over". 
+* Reset the db if you ever want to "start over". 
 This will delete your data and reset it to its starting state.
 ```bash
 npm run reset
 ```
+* run the gameEngine file to see how this class works
+```bash
+npm run game
+```
+e.g. add this in the `gameEngine.ts` file then run `npm run game` in your terminal.
+```js
+function runGame(){
+  const myGame = new GameEngine("_id1");
+  
+  myGame.roll(5);
+  
+  console.log(myGame.getState())
+  console.log(myGame.getState().frames)
+};
+
+runGame()
+```
+
+
 
 ## **Endpoints**
 
