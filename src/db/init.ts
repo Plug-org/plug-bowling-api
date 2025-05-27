@@ -24,8 +24,7 @@ db.prepare(`
     frames TEXT NOT NULL,
     current_frame_index INTEGER NOT NULL,
     is_complete INTEGER NOT NULL,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP
   );
 `).run();
 

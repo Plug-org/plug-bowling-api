@@ -20,5 +20,4 @@ export interface GameState {
   currentFrameIndex: number;
   isComplete: boolean;
   createdAt?: string;
-  updatedAt?: string;
 }
