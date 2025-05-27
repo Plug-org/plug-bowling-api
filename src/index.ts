@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const usersRouter = require('./routes/users.route');
+const gamesRouter = require('./routes/games.route');
 
 //runs db init at app start.
 require('./db/init');
@@ -16,7 +17,7 @@ app.use(express.json());
 
 // Routes
 app.use('/users', usersRouter);
-
+app.use('/games', gamesRouter);
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
