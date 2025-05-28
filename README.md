@@ -1,5 +1,13 @@
 # Plug Bowling API
 A beginner-friendly API which will let you go beyond simple CRUD operations. This API handles the game logic of a bowling match and works by updating and saving game state which is sent back in responses to the client. Requests from the client are pretty simple (usually just providing an `id`representing a user or game, or `number` representing pins ). The backend handles the logic of game play and game state updates. So the challenge for the frontend is what to do with that game state in the context of your particular version of a bowling game. The game logic might seem like the real challenge but there is still a lot to do on the client and many interpreations of how a particular client can be designed and implemented.
+
+## Contents
++ [installation](#installation)
++ [useful scripts](#useful-scripts)
++ [usage](#usage)
+    + [endpoints for users](#users)
+    + [endpoints for games](#games)
++ [suggestions](#some-ideas)
 ## Installation
 1. clone repo inside your project directory
 ```bash
@@ -30,7 +38,7 @@ npm run reset
 ```bash
 npm run game
 ```
-e.g. add this in the `gameEngine.ts` file then run `npm run game` in your terminal.
+For the `npm run game` script  to work you will need to add something like this in the `gameEngine.ts` file then run `npm run game` in your terminal. You can obviously play around with different logging and methods. This isn't necessary to create the client but is just here if you want an easy way to directly experiment with the `GameEngine`
 ```js
 function runGame(){
   const myGame = new GameEngine("_id1");
@@ -46,7 +54,7 @@ runGame()
 
 
 
-## **Endpoints**
+## **Usage**
 
 ## *Users*
 ### Get all users
@@ -152,14 +160,23 @@ successful response
 ```json
 [
   {
-        "id": "336749f6-27fa-40b3-8c27-4fb2dc45bc6d",
-        "user_id": "b0574768-8e93-4f88-bc6e-aadf126dc939",
-        "frames": "[{\"rolls\":[5,2],\"isSpare\":false,\"score\":7},{\"rolls\":[3,7],\"isSpare\":true,\"score\":13},{\"rolls\":[3,6],\"isSpare\":false,\"score\":9},{\"rolls\":[2,8],\"isSpare\":true,\"score\":10},{\"rolls\":[0,10],\"isSpare\":true,\"score\":13},{\"rolls\":[3,4],\"isSpare\":false,\"score\":7},{\"rolls\":[3,4],\"isSpare\":false,\"score\":7},{\"rolls\":[3,4],\"isSpare\":false,\"score\":7},{\"rolls\":[3,4],\"isSpare\":false,\"score\":7},{\"rolls\":[3,4],\"score\":7}]",
-        "current_frame_index": 3,
-        "is_complete": 1,
-        "created_at": "2025-05-28 15:25:29"
-    },
-    ...//more game-state objects
+    "id": "c1cb2ae6-16cb-41d3-81a3-c3287fcb84dd",
+    "userId": "f8e7c13a-2991-42d6-8dec-aff21386f57e",
+    "frames": [
+        {
+            "rolls": [
+                3,
+                2
+            ],
+            "isSpare": false,
+            "score": 5
+        }
+    ],
+    "currentFrameIndex": 1,
+    "isComplete": false,
+    "createdAt": "2025-05-28 20:20:33"
+  },
+  ...more game objects
 ]
 ```
 
@@ -169,14 +186,23 @@ GET /games/:id
 ```
 successful response
 ```json
-{
-    "id": "336749f6-27fa-40b3-8c27-4fb2dc45bc6d",
-    "user_id": "b0574768-8e93-4f88-bc6e-aadf126dc939",
-    "frames": "[{\"rolls\":[5,2],\"isSpare\":false,\"score\":7},{\"rolls\":[3,7],\"isSpare\":true,\"score\":13},{\"rolls\":[3,6],\"isSpare\":false,\"score\":9},{\"rolls\":[2,8],\"isSpare\":true,\"score\":10},{\"rolls\":[0,10],\"isSpare\":true,\"score\":13},{\"rolls\":[3,4],\"isSpare\":false,\"score\":7},{\"rolls\":[3,4],\"isSpare\":false,\"score\":7},{\"rolls\":[3,4],\"isSpare\":false,\"score\":7},{\"rolls\":[3,4],\"isSpare\":false,\"score\":7},{\"rolls\":[3,4],\"score\":7}]",
-    "current_frame_index": 3,
-    "is_complete": 1,
-    "created_at": "2025-05-28 15:25:29"
-}
+  {
+    "id": "c1cb2ae6-16cb-41d3-81a3-c3287fcb84dd",
+    "userId": "f8e7c13a-2991-42d6-8dec-aff21386f57e",
+    "frames": [
+        {
+            "rolls": [
+                3,
+                2
+            ],
+            "isSpare": false,
+            "score": 5
+        }
+    ],
+    "currentFrameIndex": 1,
+    "isComplete": false,
+    "createdAt": "2025-05-28 20:20:33"
+  },
 ```
 ### Create a new game
 ```js
@@ -190,12 +216,12 @@ POST /games/
 successful response
 ```json
 {
-    "id": "383dcf06-7c8f-41cf-a2b3-f96cbe60ce38",
-    "user_id": "ceaf1ab5-0795-4120-81ce-aa6fbe520e08",
-    "frames": "[]",
-    "current_frame_index": 0,
-    "is_complete": 0,
-    "created_at": "2025-05-28 16:17:04"
+    "id": "d687882e-ba65-4f4d-96ec-ae041b9b2c12",
+    "userId": "f8e7c13a-2991-42d6-8dec-aff21386f57e",
+    "frames": [],
+    "currentFrameIndex": 0,
+    "isComplete": false,
+    "createdAt": "2025-05-28 20:31:53"
 }
 ```
 ### Delete a game
@@ -208,6 +234,35 @@ successful response
   "success": true
 }
 ```
+### updatescore
+```js
+POST /games/rolls
+
+//req body: id is the game id.
+{
+    "id": "c1cb2ae6-16cb-41d3-81a3-c3287fcb84dd",
+    "pins": 3
+
+}
+```
+successful response
+```json
+{
+    "id": "c1cb2ae6-16cb-41d3-81a3-c3287fcb84dd",
+    "userId": "f8e7c13a-2991-42d6-8dec-aff21386f57e",
+    "frames": [
+        {
+            "rolls": [
+                3
+            ]
+        }
+    ],
+    "currentFrameIndex": 0,
+    "isComplete": false,
+    "createdAt": "2025-05-28 20:20:33"
+}
+```
+
 
 
 ## Some ideas:
