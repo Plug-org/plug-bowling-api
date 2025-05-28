@@ -13,11 +13,21 @@ export interface Frame {
   isSpare?: boolean;
 };
 
-export interface GameState {
+type GameStateBase = {
   id: string;
-  userId: string;
   frames: Frame[];
   currentFrameIndex: number;
   isComplete: boolean;
+};
+
+export interface NewGameState extends GameStateBase {
+  userId?: string;
   createdAt?: string;
 }
+
+export interface ExistingGameState extends GameStateBase {
+  userId: string;
+  createdAt: string;
+}
+
+export type GameState = NewGameState | ExistingGameState;

@@ -1,10 +1,10 @@
 const { v4: uuidv4 } = require('uuid');
-import type { Frame, GameState } from './types';
+import type { Frame, GameState, ExistingGameState } from './types';
 
 class GameEngine {
-  private state: GameState;
+  private state: GameState
 
-  constructor(userId: string, existingState?: GameState){
+  constructor(userId?: string, existingState?: ExistingGameState){
     this.state = existingState ?? {
       id: uuidv4(),
       userId,
@@ -181,17 +181,5 @@ class GameEngine {
   }
 };
 
-export default GameEngine;
 
-
-
-function runGame(){
-  const myGame = new GameEngine("_id1");
-  
-  myGame.roll(5);
-  
-  console.log(myGame.getState())
-  console.log(myGame.getState().frames)
-};
-
-runGame()
+module.exports = GameEngine;
