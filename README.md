@@ -129,6 +129,86 @@ successful response
 }
 ```
 
+API supports keeping a deleted user's games (for showing in leaderboards for example). If you want to delete a user and their games there are two separate endpoints for each.
+### Delete all of a user's games
+```js
+DELETE /users/:id/games
+```
+successful response
+```json
+{
+    "success": true,
+    "deletedGames": 3 //number of games deleted
+}
+```
+
+
+## *Games*
+### Get all games
+```js
+GET /games
+```
+successful response
+```json
+[
+  {
+        "id": "336749f6-27fa-40b3-8c27-4fb2dc45bc6d",
+        "user_id": "b0574768-8e93-4f88-bc6e-aadf126dc939",
+        "frames": "[{\"rolls\":[5,2],\"isSpare\":false,\"score\":7},{\"rolls\":[3,7],\"isSpare\":true,\"score\":13},{\"rolls\":[3,6],\"isSpare\":false,\"score\":9},{\"rolls\":[2,8],\"isSpare\":true,\"score\":10},{\"rolls\":[0,10],\"isSpare\":true,\"score\":13},{\"rolls\":[3,4],\"isSpare\":false,\"score\":7},{\"rolls\":[3,4],\"isSpare\":false,\"score\":7},{\"rolls\":[3,4],\"isSpare\":false,\"score\":7},{\"rolls\":[3,4],\"isSpare\":false,\"score\":7},{\"rolls\":[3,4],\"score\":7}]",
+        "current_frame_index": 3,
+        "is_complete": 1,
+        "created_at": "2025-05-28 15:25:29"
+    },
+    ...//more game-state objects
+]
+```
+
+### Get a game by its id
+```js
+GET /games/:id
+```
+successful response
+```json
+{
+    "id": "336749f6-27fa-40b3-8c27-4fb2dc45bc6d",
+    "user_id": "b0574768-8e93-4f88-bc6e-aadf126dc939",
+    "frames": "[{\"rolls\":[5,2],\"isSpare\":false,\"score\":7},{\"rolls\":[3,7],\"isSpare\":true,\"score\":13},{\"rolls\":[3,6],\"isSpare\":false,\"score\":9},{\"rolls\":[2,8],\"isSpare\":true,\"score\":10},{\"rolls\":[0,10],\"isSpare\":true,\"score\":13},{\"rolls\":[3,4],\"isSpare\":false,\"score\":7},{\"rolls\":[3,4],\"isSpare\":false,\"score\":7},{\"rolls\":[3,4],\"isSpare\":false,\"score\":7},{\"rolls\":[3,4],\"isSpare\":false,\"score\":7},{\"rolls\":[3,4],\"score\":7}]",
+    "current_frame_index": 3,
+    "is_complete": 1,
+    "created_at": "2025-05-28 15:25:29"
+}
+```
+### Create a new game
+```js
+POST /games/
+
+//req body
+{
+    "userId":"ceaf1ab5-0795-4120-81ce-aa6fbe520e08"
+}
+```
+successful response
+```json
+{
+    "id": "383dcf06-7c8f-41cf-a2b3-f96cbe60ce38",
+    "user_id": "ceaf1ab5-0795-4120-81ce-aa6fbe520e08",
+    "frames": "[]",
+    "current_frame_index": 0,
+    "is_complete": 0,
+    "created_at": "2025-05-28 16:17:04"
+}
+```
+### Delete a game
+```js
+DELETE /games/:id
+```
+successful response
+```json
+{
+  "success": true
+}
+```
+
 
 ## Some ideas:
 Game types:

@@ -61,4 +61,15 @@ router.delete('/:id', (req:Request, res:Response) => {
 });
 
 
+router.delete('/:id/games', (req:Request, res:Response) => {
+  const stmt = db.prepare('DELETE FROM games WHERE user_id = ?');
+  const info = stmt.run(req.params.id);
+
+  if(info.changes > 0) {
+    res.json({ success: true, deletedGames: info.changes });
+  }else{
+    res.status(404).json({ error: "No games found for this user." });
+  }
+});
+
 module.exports = router;
