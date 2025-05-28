@@ -1,21 +1,25 @@
 const express = require("express");
 const db = require('../db/init');
 import type { Request, Response } from 'express';
-const GameEngine =require('../gameEngine');
+const GameEngine = require('../gameEngine');
+const normalizeGameStates = require('../utils/normalizeGameState');
 
 
 const router = express.Router();
 
 
 router.get("/", (req:Request, res:Response) => {
-  const games = db.prepare('SELECT * FROM games ORDER BY createdAt DESC').all();
+  const rawGames = db.prepare('SELECT * FROM games ORDER BY createdAt DESC').all();
+  const games = normalizeGameStates(rawGames)
   res.json(games)
 });
 
 
 router.get("/:id", (req:Request, res:Response) => {
   const stmt = db.prepare("SELECT * FROM games WHERE id = ?");
-  const games = stmt.get(req.params.id);
+  const rawGames = stmt.get(req.params.id);
+  const games = normalizeGameStates(rawGames);
+
   if(games){
     res.json(games)
   }else{
@@ -48,7 +52,6 @@ router.post("/", (req:Request, res:Response) => {
    //respond with new game blank state 
    const newGame = db.prepare('SELECT * FROM games WHERE id = ?').get(id);
    res.json(newGame);
-
 });
 
 router.delete("/:id", (req:Request, res:Response) => {
@@ -92,10 +95,9 @@ router.post("/rolls", (req:Request, res:Response) => {
 
   //return state from db to client
   const result = db.prepare('SELECT * FROM games WHERE id = ?').get(id);
-  result.frames = JSON.parse(result.frames)
-  result.isComplete = Boolean(gameState.isComplete)
-  res.json(result);
+  const newState = normalizeGameStates(result)
 
+  res.json(newState);
 });
 
 module.exports = router;
