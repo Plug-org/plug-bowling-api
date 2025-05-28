@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 router.get('/', (req: Request, res:Response) => {
-  const users = db.prepare('SELECT * FROM users ORDER BY created_at DESC').all();
+  const users = db.prepare('SELECT * FROM users ORDER BY createdAt DESC').all();
   res.json(users);
 });
 
@@ -62,7 +62,7 @@ router.delete('/:id', (req:Request, res:Response) => {
 
 
 router.delete('/:id/games', (req:Request, res:Response) => {
-  const stmt = db.prepare('DELETE FROM games WHERE user_id = ?');
+  const stmt = db.prepare('DELETE FROM games WHERE userId = ?');
   const info = stmt.run(req.params.id);
 
   if(info.changes > 0) {

@@ -26,19 +26,19 @@ class GameEngine {
   public roll(pins: number): GameState {
     if (this.state.isComplete) throw new Error("Game is already finished.");
     if (pins < 0 || pins > 10 ) throw new Error('Invalid number of pins');
-
+    
     const { frames, currentFrameIndex } = this.state;
     const isFinalFrame = currentFrameIndex === 9;
-
+    
     //Create new frame if necessary
     if ( !frames[currentFrameIndex]) {
       frames[currentFrameIndex] = { rolls: [] };
     }
-
+    
     const currentFrame = frames[currentFrameIndex];
     
     //Guard against illegal totals i.e. 11+ in a single frame (except the final frame)
-    if(!isFinalFrame && currentFrame.rolls.length === 1){
+    if(!isFinalFrame && currentFrame.rolls?.length === 1){
       const firstRoll = currentFrame.rolls[0];
       if(firstRoll + pins > 10){
         throw new Error('Total pins in a frame cannot exceed 10.')
@@ -48,7 +48,6 @@ class GameEngine {
     if (isFinalFrame) {
       this.validateFinalFrameRoll(currentFrame, pins)
     }
-
     currentFrame.rolls.push(pins);
 
     //handle strike
@@ -182,4 +181,17 @@ class GameEngine {
 };
 
 
+function runGame() {
+  const myGame = new GameEngine("1");
+
+  
+  myGame.roll(3);
+  myGame.roll(1);
+
+  
+  myGame.roll(3);
+
+  console.log(myGame.getState());
+}
+runGame();
 module.exports = GameEngine;

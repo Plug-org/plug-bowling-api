@@ -12,7 +12,7 @@ db.prepare(`
   CREATE TABLE IF NOT EXISTS users (
     id TEXT PRIMARY KEY,
     name TEXT NOT NULL,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    createdAt TEXT DEFAULT CURRENT_TIMESTAMP
   );
 `).run();
 
@@ -20,11 +20,11 @@ db.prepare(`
 db.prepare(`
   CREATE TABLE IF NOT EXISTS games (
     id TEXT PRIMARY KEY,
-    user_id TEXT NOT NULL,
+    userId TEXT NOT NULL,
     frames TEXT NOT NULL,
-    current_frame_index INTEGER NOT NULL,
-    is_complete INTEGER NOT NULL,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    currentFrameIndex INTEGER NOT NULL,
+    isComplete INTEGER NOT NULL,
+    createdAt TEXT DEFAULT CURRENT_TIMESTAMP
   );
 `).run();
 

@@ -23,7 +23,7 @@ function seedGames() {
 
     const insertGame = db.prepare(`
       INSERT INTO games (
-        id, user_id, frames, current_frame_index, is_complete 
+        id, userId, frames, currentFrameIndex, isComplete 
         ) VALUES (?, ?, ?, ?, ?)
       `);
           
