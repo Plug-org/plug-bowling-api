@@ -1,6 +1,21 @@
-[
+const { v4: uuidv4 } = require('uuid');
+
+const initialUsers = [
   {
-    "userId": "1",
+    "id":uuidv4(),
+    "name": "Donnie"
+  },
+  {
+    "id": uuidv4(),
+    "name": "The Big Lebowski"
+  }
+];
+
+
+const initialGames = [
+  {
+    "id":uuidv4(),
+    "userId": "",
     "frames": [
   { "rolls": [ 5, 2 ], "isSpare": false, "score": 7 },
   { "rolls": [ 3, 7 ], "isSpare": true,  "score": 13 },
@@ -17,7 +32,8 @@
     "isComplete": true
   },
   {
-    "userId": "2",
+    "id":uuidv4(),
+    "userId": "",
     "frames": [
   { "rolls": [ 10 ], "isStrike": true, "score": 30 },
   { "rolls": [ 10 ], "isStrike": true, "score": 30 },
@@ -33,4 +49,8 @@
     "currentFrameIndex": 9,
     "isComplete": true
   }
-]
+];
+
+module.exports = { initialUsers, initialGames };
+
+

@@ -10,7 +10,7 @@ db.pragma('journal_mode = WAL');
 //create users table
 db.prepare(`
   CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id TEXT PRIMARY KEY,
     name TEXT NOT NULL,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP
   );
@@ -19,7 +19,7 @@ db.prepare(`
 //create games table
 db.prepare(`
   CREATE TABLE IF NOT EXISTS games (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id TEXT PRIMARY KEY,
     user_id TEXT NOT NULL,
     frames TEXT NOT NULL,
     current_frame_index INTEGER NOT NULL,
