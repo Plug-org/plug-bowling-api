@@ -50,7 +50,8 @@ router.post("/", (req:Request, res:Response) => {
    );
 
    //respond with new game blank state 
-   const newGame = db.prepare('SELECT * FROM games WHERE id = ?').get(id);
+   const rawGame = db.prepare('SELECT * FROM games WHERE id = ?').get(id);
+   const newGame = normalizeGameStates(rawGame);
    res.json(newGame);
 });
 
