@@ -96,14 +96,14 @@ PUT /users
 
 //req body
 {
-  "name": "user name"
+  "name": "User name"
 }
 ```
 successful response
 ```js
 {
     "id": 17,
-    "name": "New User",
+    "name": "User name",
     "created_at": "2025-05-27 16:30:32"
 }
 ```
@@ -121,7 +121,7 @@ successful response
 ```js
 {
     "id": 15,
-    "name": "New Name.",
+    "name": "updated name",
     "created_at": "2025-05-27 16:26:37"
 }
 ```
