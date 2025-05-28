@@ -28,7 +28,7 @@ const initialGames = [
   { "rolls": [ 3, 4 ], "isSpare": false, "score": 7 },
   { "rolls": [ 3, 4 ], "score": 7 }
     ],
-    "currentFrameIndex": 3,
+    "currentFrameIndex": 9,
     "isComplete": true
   },
   {
