@@ -79,7 +79,7 @@ router.post("/rolls", (req:Request, res:Response) => {
   const updatedState = game.getState();
   updatedState.frames = JSON.stringify(updatedState.frames);
 
-  const updateStmt = db.prepare(`
+  db.prepare(`
     UPDATE games
     SET frames = ?, currentFrameIndex = ?, isComplete = ?
     WHERE id = ?
